@@ -7,8 +7,10 @@
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage[left=1.0cm,right=1cm,top=3cm,bottom=3cm]{geometry}
-\usepackage{amsfonts,amssymb}
+\usepackage{amsfonts,amssymb,amsthm}
 \usepackage{mathtools}
+
+\newtheorem{theorem}{Theorem}
 
 \def\labelitemi{--}
 
@@ -139,14 +141,26 @@ $\mathbf{t}^{(r)}$, it follows that
 
 \section{Derivation of the svGPFA variational lower bound}
 
-Consider the joint prior on observations, $Y$, latents
-\begin{thm:variationalLowerBound}
+Theorem~\ref{thm:variationalLowerBound} demonstrates the validity of Eq.~4 in
+\citet{dunckerAndSahani18}.
+
+\begin{theorem}
+    \begin{align}
+        \log
+        P(Y)\ge\sum_{n=1}^N\sum_{r=1}^R\mathbb{E}_{q\left(h_{nr}(\cdot)\right)}\left\{\log P(y_{nr}|h_{nr}(\cdot))\right\}-\sum_{r=1}^R\sum_{k=1}^KKL(q(\mathbf{u}_{kr})||p(\mathbf{u}_{kr}))
+    \end{align}
+    \label{thm:variationalLowerBound}
+\end{theorem}
+
+\begin{proof}
+    We begin with joint-data likelihood of the full model, given in Eq.~1 of
+    the supplementary material in~\citet{dunckerAndSahani18}:
 
     \begin{align}
-        \log P(Y)\ge \mathcal{E}_{q{h_{nr}(\cdot))\left\{\log P(Y|h_{nr}(\cdot))\right\}-\sum_{k=1}^KKL(q(\mathbf{u}_{kr}||p(\mathbf{u}_{kr}))
-    \begin{align}
-
-\end{thm:variationalLowerBound}
+        % P\left(\mathcal{Y},\{x_{kr}(\cdot)\}_{k=1,r=1}^{K,R},\{\mathbf{u}_{kr}\}_{k=1,r=1}^{K,R}\right)=&P\left(\mathcal{Y}|\{x_{kr}(\cdot)\}_{k=1,r=1}^{K,R}\right)\prod_{r=1}^R\prod_{k=1^KP(x_{kr}(\cdot)|\mathbf{u}_{kr})P(\mathbf{u}_{kr})
+        P\left(\mathcal{Y},\{x_{kr}(\cdot)\}_{k=1,r=1}^{K,R},\{\mathbf{u}_{kr}\}_{k=1,r=1}^{K,R}\right)=&P\left(\mathcal{Y}|\{x_{kr}(\cdot)\}_{k=1,r=1}^{K,R}\right)\prod_{k=1}^K\prod_{r=1}^RP(x_{kr}(\cdot)|\mathbf{u}_{kr})P(\mathbf{u}_{kr})
+    \end{align}
+\end{proof}
 
 To derive the sparse variational lower bound we have the freedom of using
 $\{x_{kr}(\cdot)\}_{k=1,r=1}^{K,R}$ or $\{h_{nr}(\cdot)\}_{n=1,r=1}^{N,R}$ as
